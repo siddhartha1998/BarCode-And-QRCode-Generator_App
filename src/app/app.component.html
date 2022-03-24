@@ -1,20 +1,34 @@
-<form [formGroup]="testForm" (ngSubmit)="generateQRCode()">
-  <div>
-    <input type="text" class="form-control" formControlName="value" style="padding: 5px;"
+<div class="col-md-12">
+  <nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+ 
+
+    </div>
+  </nav>
+</div>
+
+<div class="container">
+ <form [formGroup]="testForm">
+    <input type="text" class="form-control" formControlName="value"
     [ngClass]="{ 'is-invalid': submitted && testForm.get('value').errors || testForm.get('value').dirty }" >
     <div *ngIf="submitted && testForm.get('value').errors" class="invalid-feedback">
-      <div *ngIf="testForm.get('value').errors.required">Atleast one character is required</div>
+      <div *ngIf="testForm.get('value').errors.required"><span class="alert-danger">Atleast one character is required</span></div>
     </div><br><br>
-    <button type="submit" onclick="this.value=null;" style="position: relative; text-align: end; cursor: pointer; padding: 5px; color: rgb(79, 66, 150);">Generate QR Code</button>
-  </div>
-  </form>
+    <div style="text-align: center;">
+      <button type="submit" class="btn btn-primary" (click)="generateQRCode()" onclick="this.value=null;">Generate QR Code</button>&nbsp;&nbsp;
+      <button type="submit" class="btn btn-success" (click)="generateBarCode()" onclick="this.value=null;">Generate Bar Code</button>
+    </div>
+ </form>
+</div>
 
-<div>
-<qrcode 
-      *ngIf="displayQRCode" 
-      [qrdata]="qrCode" 
+<div  *ngIf="displayQRCode" style="text-align: center;">
+ <qrcode 
+      [qrdata]="data" 
       [allowEmptyString]="true"
       [width]="256" 
       [errorCorrectionLevel]="'M'">
-</qrcode>
+ </qrcode>
+</div>
+<div *ngIf="displayBarCode" style="text-align: center;">
+  <ngx-barcode [bc-value]="data" width="256" height="256"  [bc-display-value]="true"></ngx-barcode>
 </div>

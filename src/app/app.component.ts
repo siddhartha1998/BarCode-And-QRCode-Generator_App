@@ -9,8 +9,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class AppComponent implements OnInit {
   title = 'BarCodeAndQRCodeReader';
   testForm: FormGroup;
-  public qrCode: any = null;
+  public data: any = null;
   displayQRCode:boolean = false;
+  displayBarCode:boolean = false;
   submitted: boolean = false;
   needToQRCodeConvert:any;
   constructor (private formBuilder: FormBuilder) {
@@ -21,16 +22,31 @@ export class AppComponent implements OnInit {
    this.testForm = this.formBuilder.group({
     value:['', Validators.required]
    });
+  
   }
   generateQRCode(){
     this.submitted = true;
     if(this.testForm.invalid){
       this.displayQRCode = false;
+      this.displayBarCode = false;
       return;
     }
 
+    this.displayBarCode = false;
     this.displayQRCode = true;
-    this.qrCode = this.testForm.value.value;
+    this.data = this.testForm.value.value;
+    this.submitted = false;
+  }
+  generateBarCode(){
+    this.submitted = true;
+    if(this.testForm.invalid){
+      this.displayBarCode = false;
+      this.displayQRCode = false;
+      return;
+    }
+    this.displayQRCode = false;
+    this.displayBarCode = true;
+    this.data = this.testForm.value.value;
     this.submitted = false;
   }
 }
