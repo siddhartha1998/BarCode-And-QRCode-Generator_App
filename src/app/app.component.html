@@ -1,0 +1,20 @@
+<form [formGroup]="testForm" (ngSubmit)="generateQRCode()">
+  <div>
+    <input type="text" class="form-control" formControlName="value" style="padding: 5px;"
+    [ngClass]="{ 'is-invalid': submitted && testForm.get('value').errors || testForm.get('value').dirty }" >
+    <div *ngIf="submitted && testForm.get('value').errors" class="invalid-feedback">
+      <div *ngIf="testForm.get('value').errors.required">Atleast one character is required</div>
+    </div><br><br>
+    <button type="submit" onclick="this.value=null;" style="position: relative; text-align: end; cursor: pointer; padding: 5px; color: rgb(79, 66, 150);">Generate QR Code</button>
+  </div>
+  </form>
+
+<div>
+<qrcode 
+      *ngIf="displayQRCode" 
+      [qrdata]="qrCode" 
+      [allowEmptyString]="true"
+      [width]="256" 
+      [errorCorrectionLevel]="'M'">
+</qrcode>
+</div>
